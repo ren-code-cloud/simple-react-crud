@@ -39,8 +39,6 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
           value={date}
           onChange={(e) => handleDateChange(e.target.value)}
         />
-      </Form>
-      <Form>
         <button type="submit">Submit</button>
       </Form>
     </div>

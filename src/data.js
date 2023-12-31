@@ -1,6 +1,6 @@
 // import localforage from "localforage";
-// import { matchSorter } from "match-sorter";
-// import sortBy from "sort-by";
+import { matchSorter } from "match-sorter";
+import sortBy from "sort-by";
 
 // export async function getContacts(query) {
 //   let datas = await localforage.getItem("data");
@@ -10,9 +10,20 @@
 //   }
 //   return datas.sort(sortBy("last", "createdAt"));
 // }
+export async function getContacts(query) {
+  let datas = JSON.parse(localStorage.getItem("data")) || [];
+
+  if (query) {
+    datas = matchSorter(datas, query, { keys: ["id"] });
+  }
+
+  return datas.sort(sortBy("id", "createdAt"));
+}
+
 export async function createData() {
   let id = Math.random().toString(36).substring(2, 9);
   let dataObject = { id, createdAt: Date.now() };
+  await set(dataObject);
   return dataObject;
 }
 // export async function getContact(id) {
@@ -43,6 +54,6 @@ export async function createData() {
 //   return false;
 // }
 
-// function set(datas) {
-//   return localforage.setItem("data", datas);
-// }
+function set(datas) {
+  return localStorage.setItem("data", JSON.stringify(datas));
+}

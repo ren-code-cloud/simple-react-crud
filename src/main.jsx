@@ -6,12 +6,13 @@ import { Provider } from "react-redux";
 import Component from "./components/component.jsx";
 import "./index.css";
 import xtore from "./app/xtore.js";
+import ErrorPage from "./ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Component />,
-    action: createData,
+    errorElement: <ErrorPage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
