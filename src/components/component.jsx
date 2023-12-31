@@ -1,4 +1,5 @@
 import React from "react";
+import { Form } from "react-router-dom";
 import { connect } from "react-redux";
 import { setName, addTodo, setDate } from "../actions/index.js";
 
@@ -7,8 +8,8 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
     setName(newName);
   };
 
-  const handleAddTodo = () => {
-    addTodo("New Todo");
+  const handleAddTodo = (newTodo) => {
+    addTodo(newTodo);
   };
 
   const handleDateChange = (newDate) => {
@@ -18,20 +19,30 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
   return (
     <div>
       <p>Name: {name}</p>
-      <p>Todos: {todos.join(", ")}</p>
+      <p>Todos: {todos}</p>
       <p>Date: {date}</p>
-      <input
-        type="text"
-        placeholder="Enter name"
-        value={name}
-        onChange={(e) => handleNameChange(e.target.value)}
-      />
-      <button onClick={handleAddTodo}>Add Todo</button>
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => handleDateChange(e.target.value)}
-      />
+      <Form method="post">
+        <input
+          type="text"
+          placeholder="Enter name"
+          value={name}
+          onChange={(e) => handleNameChange(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Enter your todo"
+          value={todos}
+          onChange={(e) => handleAddTodo(e.target.value)}
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => handleDateChange(e.target.value)}
+        />
+      </Form>
+      <Form>
+        <button type="submit">Submit</button>
+      </Form>
     </div>
   );
 };

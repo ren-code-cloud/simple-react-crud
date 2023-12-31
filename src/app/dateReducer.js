@@ -1,4 +1,4 @@
-const dateReducer = (state = null, action) => {
+const dateReducer = (state = "", action) => {
   switch (action.type) {
     case "SET_DATE":
       return action.payload;
