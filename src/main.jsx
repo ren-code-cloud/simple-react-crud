@@ -1,19 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App.jsx";
 import { createData } from "./data.js";
+import { Provider } from "react-redux";
+import Component from "./components/component.jsx";
 import "./index.css";
+import xtore from "./app/xtore.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <component />,
     action: createData(),
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <Provider store={xtore}>
+      <Component />
+    </Provider>
   </React.StrictMode>
 );
