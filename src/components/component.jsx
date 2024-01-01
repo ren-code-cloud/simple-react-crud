@@ -27,7 +27,11 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
   const handleDateChange = (newDate) => {
     setDate(newDate);
   };
-
+  const handleState = () => {
+    setDate("");
+    setName("");
+    addTodo("");
+  };
   return (
     <div>
       <p>Name: {name}</p>
@@ -51,11 +55,19 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
           value={date}
           onChange={(e) => handleDateChange(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={handleState}>
+          Submit
+        </button>
       </Form>
       <div>
         {users.length ? (
-          users.map((item) => <div key={item.id}>{item.id}</div>)
+          users.map((item) => (
+            <div key={item.id}>
+              <div>{item.name}</div>
+              <div>{item.todos}</div>
+              <div>{item.date}</div>
+            </div>
+          ))
         ) : (
           <div>Not found</div>
         )}

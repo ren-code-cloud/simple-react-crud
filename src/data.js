@@ -1,19 +1,30 @@
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
+import xtore from "./app/xtore.js";
+
+const mapStateToProps = (state) => ({
+  name: state.name,
+  todos: state.todos,
+  date: state.date,
+});
 
 export async function getDatas(query) {
+  console.log(query);
   let datas = JSON.parse(localStorage.getItem("data")) || [];
 
   if (query) {
     datas = matchSorter(datas, query, { keys: ["id"] });
   }
 
-  return datas.sort(sortBy("id", "createdAt"));
+  return datas.sort(sortBy("id", "name"));
 }
 
+//this function will create a data then filtered and set to our localstorage
 export async function createData() {
+  const reduxState = xtore.getState();
+  const { name, todos, date } = reduxState;
   let id = Math.random().toString(36).substring(2, 9);
-  let dataObject = { id, createdAt: Date.now() };
+  let dataObject = { id, name, todos, date };
   let datas = await getDatas();
   datas.unshift(dataObject);
   await set(datas);
