@@ -1,9 +1,21 @@
 import React from "react";
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import { connect } from "react-redux";
 import { setName, addTodo, setDate } from "../actions/index.js";
+import { createData, getDatas } from "../data.js";
 
+export async function loader() {
+  const users = await getDatas();
+  return { users };
+}
+
+export async function action() {
+  const user = await createData();
+  return { user };
+}
 const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
+  const { users } = useLoaderData();
+
   const handleNameChange = (newName) => {
     setName(newName);
   };
@@ -41,9 +53,17 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
         />
         <button type="submit">Submit</button>
       </Form>
+      <div>
+        {users.length ? (
+          users.map((item) => <div key={item.id}>{item.id}</div>)
+        ) : (
+          <div>Not found</div>
+        )}
+      </div>
     </div>
   );
 };
+
 const mapStateToProps = (state) => ({
   name: state.name,
   todos: state.todos,

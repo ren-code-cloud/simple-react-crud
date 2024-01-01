@@ -7,12 +7,18 @@ import Component from "./components/component.jsx";
 import "./index.css";
 import xtore from "./app/xtore.js";
 import ErrorPage from "./ErrorPage.jsx";
+import {
+  loader as rootLoader,
+  action as rootAction,
+} from "./components/component.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Component />,
     errorElement: <ErrorPage />,
+    loader: rootLoader,
+    action: rootAction,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
