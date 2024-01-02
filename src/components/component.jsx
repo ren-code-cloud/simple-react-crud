@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setName, addTodo, setDate } from "../actions/index.js";
 import { createData, getDatas } from "../data.js";
@@ -59,19 +59,21 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
           Submit
         </button>
       </Form>
-      <div>
+      <nav>
         {users.length ? (
-          users.map((item) => (
-            <div key={item.id}>
-              <div>{item.name}</div>
-              <div>{item.todos}</div>
-              <div>{item.date}</div>
-            </div>
-          ))
+          <ul>
+            {users.map((item) => (
+              <li key={item.id}>
+                <Link to={`data/${item.id}`}>
+                  {item.name ? <>{item.name}</> : <i>No Name</i>}{" "}
+                </Link>
+              </li>
+            ))}
+          </ul>
         ) : (
           <div>Not found</div>
         )}
-      </div>
+      </nav>
     </div>
   );
 };

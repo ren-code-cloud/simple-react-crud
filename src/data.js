@@ -2,14 +2,7 @@ import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 import xtore from "./app/xtore.js";
 
-const mapStateToProps = (state) => ({
-  name: state.name,
-  todos: state.todos,
-  date: state.date,
-});
-
 export async function getDatas(query) {
-  console.log(query);
   let datas = JSON.parse(localStorage.getItem("data")) || [];
 
   if (query) {
@@ -30,33 +23,31 @@ export async function createData() {
   await set(datas);
   return dataObject;
 }
-// export async function getContact(id) {
-//   await fakeNetwork(`contact:${id}`);
-//   let contacts = await localforage.getItem("contacts");
-//   let contact = contacts.find((contact) => contact.id === id);
-//   return contact ?? null;
-// }
+export async function getData(id) {
+  let datas = await JSON.parse(localStorage.getItem("data"));
+  let data = datas.find((data) => data.id === id);
+  return data ?? null;
+}
 
-// export async function updateContact(id, updates) {
-//   await fakeNetwork();
-//   let contacts = await localforage.getItem("contacts");
-//   let contact = contacts.find((contact) => contact.id === id);
-//   if (!contact) throw new Error("No contact found for", id);
-//   Object.assign(contact, updates);
-//   await set(contacts);
-//   return contact;
-// }
+export async function updateData(id, updates) {
+  let datas = await JSON.parse(localStorage.getItem("data"));
+  let data = datas.find((data) => data.id === id);
+  if (!data) throw new Error("No data found for", id);
+  Object.assign(data, updates);
+  await set(datas);
+  return data;
+}
 
-// export async function deleteContact(id) {
-//   let contacts = await localforage.getItem("contacts");
-//   let index = contacts.findIndex((contact) => contact.id === id);
-//   if (index > -1) {
-//     contacts.splice(index, 1);
-//     await set(contacts);
-//     return true;
-//   }
-//   return false;
-// }
+export async function deleteData(id) {
+  let datas = JSON.parse(localStorage.getItem("data"));
+  let index = datas.findIndex((data) => data.id === id);
+  if (index > -1) {
+    datas.splice(index, 1);
+    localStorage.setItem("data", JSON.stringify(datas));
+    return true;
+  }
+  return false;
+}
 
 function set(datas) {
   return localStorage.setItem("data", JSON.stringify(datas));
