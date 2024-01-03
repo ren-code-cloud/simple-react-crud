@@ -11,6 +11,7 @@ export async function action({ request, params }) {
 function Update() {
   const { data } = useLoaderData();
   const navigate = useNavigate();
+
   return (
     <Form method="post" id="data-form">
       <p className="mb-4">
