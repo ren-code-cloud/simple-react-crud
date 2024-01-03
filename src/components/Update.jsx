@@ -12,7 +12,7 @@ function Update() {
   const { data } = useLoaderData();
   const navigate = useNavigate();
   return (
-    <Form method="post" id="contact-form">
+    <Form method="post" id="data-form">
       <p className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Name

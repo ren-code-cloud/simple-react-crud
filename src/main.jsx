@@ -7,8 +7,8 @@ import "./index.css";
 import xtore from "./app/xtore.js";
 import ErrorPage from "./ErrorPage.jsx";
 import {
-  loader as componentLoader,
-  action as componentAction,
+  loader as rootLoader,
+  action as rootAction,
 } from "./components/component.jsx";
 import { loader as dataLoader } from "./components/DataComponent.jsx";
 import Update from "./components/Update.jsx";
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <Component />,
     errorElement: <ErrorPage />,
-    loader: componentLoader,
-    action: componentAction,
+    loader: rootLoader,
+    action: rootAction,
   },
   {
     path: "data/:dataId",

@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, useLoaderData, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setName, addTodo, setDate } from "../actions/index.js";
@@ -15,6 +14,7 @@ export async function action() {
 }
 const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
   const { users } = useLoaderData();
+  console.log(users);
 
   const handleNameChange = (newName) => {
     setName(newName);
@@ -32,32 +32,48 @@ const Component = ({ name, todos, date, setName, addTodo, setDate }) => {
     setName("");
     addTodo("");
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Handling form submission");
+    console.table({ name, todos, date });
+
+    try {
+      await action();
+    } catch (error) {
+      console.error("Error creating data:", error);
+    }
+
+    handleState();
+  };
+
   return (
     <div>
       <p>Name: {name}</p>
       <p>Todos: {todos}</p>
       <p>Date: {date}</p>
-      <Form method="post">
+      <Form method="post" onSubmit={handleSubmit} id="sheesh">
         <input
           type="text"
           placeholder="Enter name"
           value={name}
+          name="name"
           onChange={(e) => handleNameChange(e.target.value)}
         />
         <input
           type="text"
           placeholder="Enter your todo"
           value={todos}
+          name="todos"
           onChange={(e) => handleAddTodo(e.target.value)}
         />
         <input
           type="date"
           value={date}
+          name="date"
           onChange={(e) => handleDateChange(e.target.value)}
         />
-        <button type="submit" onClick={handleState}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </Form>
       <nav>
         {users.length ? (

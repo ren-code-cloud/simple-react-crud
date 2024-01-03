@@ -4,7 +4,6 @@ import xtore from "./app/xtore.js";
 
 export async function getDatas(query) {
   let datas = JSON.parse(localStorage.getItem("data")) || [];
-
   if (query) {
     datas = matchSorter(datas, query, { keys: ["id"] });
   }
@@ -14,15 +13,21 @@ export async function getDatas(query) {
 
 //this function will create a data then filtered and set to our localstorage
 export async function createData() {
-  const reduxState = xtore.getState();
-  const { name, todos, date } = reduxState;
-  let id = Math.random().toString(36).substring(2, 9);
-  let dataObject = { id, name, todos, date };
-  let datas = await getDatas();
-  datas.unshift(dataObject);
-  await set(datas);
-  return dataObject;
+  try {
+    const reduxState = xtore.getState();
+    const { name, todos, date } = reduxState;
+    let id = Math.random().toString(36).substring(2, 9);
+    let dataObject = { id, name, todos, date };
+    let datas = await getDatas();
+    datas.unshift(dataObject);
+    await set(datas);
+    return dataObject;
+  } catch (error) {
+    console.error("Error creating data:", error);
+    throw error;
+  }
 }
+
 export async function getData(id) {
   let datas = await JSON.parse(localStorage.getItem("data"));
   let data = datas.find((data) => data.id === id);
